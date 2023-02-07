@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-// import logo from './logo.svg';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-// import './Feedback.css';
 import { Login } from "./Components/Login";
-import { Register } from "./Components/Register";
-import Feedback from "./Components/Feedback";
+import Dashboard from "./Pages/Dashboard";
+import Questions from "./Components/Questions";
+import AdminPages from "./Pages/Admin";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -92,9 +91,11 @@ function App() {
       } */}
 
       <Routes>
-        <Route path="/" element={currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />} />
-        <Route path="/main" element={<Feedback />} />
-
+        {/* <Route path="/login" element={currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<AdminPages />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/question" element={<Questions />} />
       </Routes>
     </div>
   );

@@ -1,28 +1,42 @@
+/* @import '~antd/dist/antd.css'; */
+
 .App {
   text-align: center;
   display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  color: white;
-  background-image: linear-gradient(79deg, #7439db, #a1a568 48%, #bde49d);
+  color: black;
 }
 
-.auth-form-container,
-.login-form,
-.register-form {
+.auth-form-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(79deg, #7439db, #a1a568 48%, #bde49d);
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid black;
 }
 
-@media screen and (min-width: 600px) {
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+
+  /* margin-right: 18px; */
+}
+
+
+/* @media screen and (min-width: 600px) {
   .auth-form-container {
     padding: 5rem;
     border: 1px solid white;
-    border-radius: 10px;
-    margin: 0.5rem;
   }
-}
+} */
 
 label {
   text-align: left;
@@ -49,4 +63,71 @@ button {
   background: none;
   color: white;
   text-decoration: underline;
+}
+
+.context {
+  padding: 10px;
+  word-wrap: break-word;
+}
+
+/* css of feedback */
+
+.form-horizontal {
+  width: 700px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+table {
+  font-size: 12px !important;
+}
+
+.btn-dark {
+  min-width: 180px;
+  padding: 10px;
+}
+
+/* rating */
+.rate {
+  float: left;
+  height: 46px;
+  /* padding: 0 10px; */
+}
+
+.rate:not(:checked)>input {
+  position: absolute;
+  top: -9999px;
+}
+
+.rate:not(:checked)>label {
+  float: right;
+  width: 35px;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 45px;
+  color: #ccc;
+  margin-right: 20px;
+  margin-top: -15px;
+}
+
+.rate:not(:checked)>label:before {
+  content: '★ ';
+}
+
+.rate>input:checked~label {
+  color: #ffc700;
+}
+
+.rate:not(:checked)>label:hover,
+.rate:not(:checked)>label:hover~label {
+  color: #deb217;
+}
+
+.rate>input:checked+label:hover,
+.rate>input:checked+label:hover~label,
+.rate>input:checked~label:hover,
+.rate>input:checked~label:hover~label,
+.rate>label:hover~input:checked~label {
+  color: #c59b08;
 }

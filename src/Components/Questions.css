@@ -1,0 +1,16 @@
+.frame {
+    Border: 1px solid black;
+    width: 50%;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.txt-button {
+    margin-right: 11px;
+}
