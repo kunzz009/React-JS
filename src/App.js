@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import { Login } from "./Components/Login";
-import Dashboard from "./Pages/Dashboard";
+import Main from "./Pages/Main";
 import Questions from "./Components/Questions";
 import AdminPages from "./Pages/Admin";
+import Dashboard from "./Pages/Dashboard";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -83,6 +84,31 @@ function App() {
     </div>
   );
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/admin",
+      element: <Main />,
+      children: [
+        {
+          path: "/admin/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/admin/manage",
+          element: <AdminPages />,
+        },
+        {
+          path: "/admin/question",
+          element: <Questions />,
+        },
+      ],
+    },
+  ]);
+
   return (
     <div className="App">
       {/* {
@@ -90,13 +116,7 @@ function App() {
         // <Feedback/>
       } */}
 
-      <Routes>
-        {/* <Route path="/login" element={currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />} /> */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminPages />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/question" element={<Questions />} />
-      </Routes>
+      <RouterProvider router={router} />
     </div>
   );
 }
