@@ -19,13 +19,10 @@ function App() {
   // User Login info
   const database = [
     {
-      username: "user1",
-      password: "pass1"
+      username: "lamct",
+      password: "123456",
+      ID: "703b0336-44d8-40c4-9dc1-3c6e8d9b6d03"
     },
-    {
-      username: "user2",
-      password: "pass2"
-    }
   ];
 
   const errors = {

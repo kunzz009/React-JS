@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
 import "../Pages/Admin.css";
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    SolutionOutlined,
-    FileTextOutlined,
-    BarsOutlined,
-} from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
 
