@@ -116,7 +116,17 @@ const Questions = () => {
 
     const handleClick = () => {
         addQuestionView.push(
-            <button>Add Button</button>
+            <div>
+                <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
+                            <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} />
+                            <select class="form-control" onChange={onChangeSelect} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
+                                <option value={"1"}> Đoạn văn </option>
+                                <option value={"2"}> Tích chọn </option>
+                                <option value={"3"}> Hộp kiểm  </option>
+                            </select>
+                        </div>
+                {renderViewType()}
+            </div>
         )
         setAddQuestionView([
             ...addQuestionView
@@ -139,16 +149,7 @@ const Questions = () => {
             </div>
             {addQuestionView.map((line, index) => (
                 <div key={index} class="frame" >
-                    <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
-                        <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} />
-                        <select class="form-control" onChange={onChangeSelect} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
-                            <option value={"1"}> Đoạn văn </option>
-                            <option value={"2"}> Tích chọn </option>
-                            <option value={"3"}> Hộp kiểm  </option>
-                        </select>
-                    </div>
-
-                    {renderViewType()}
+                    {line}
                 </div>
             ))}
             <div>
