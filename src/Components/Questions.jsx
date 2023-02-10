@@ -90,7 +90,8 @@ const FormCheckbox = () => {
 // }
 
 const Questions = () => {
-    const [selectType, setSelectType] = useState("1")
+    const [selectType, setSelectType] = useState("1");
+    const [addQuestionView, setAddQuestionView] = useState([]);
 
     const onChangeSelect = (e) => {
         setSelectType(e.target.value)
@@ -109,9 +110,22 @@ const Questions = () => {
         }
     }
 
+    const saveFeedBack = () => {
+        window.location.href = "/admin/feedback";
+    }
+
+    const handleClick = () => {
+        addQuestionView.push(
+            <button>Add Button</button>
+        )
+        setAddQuestionView([
+            ...addQuestionView
+        ])
+    };  
+
     return (
         <div class="col-12 font-weight-bold mb-2 container" > Tạo Ý Kiến Đánh Giá
-            <div class="frame" >
+            <div key={0} class="frame" >
                 <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
                     <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} />
                     <select class="form-control" onChange={onChangeSelect} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
@@ -123,11 +137,23 @@ const Questions = () => {
 
                 {renderViewType()}
             </div>
-            <div>
-                <input class="txt-button" type="submit" value={"Lưu"} onClick />
-                <input type="submit" value={"Thêm câu hỏi "} onClick
+            {addQuestionView.map((line, index) => (
+                <div key={index} class="frame" >
+                    <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
+                        <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} />
+                        <select class="form-control" onChange={onChangeSelect} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
+                            <option value={"1"}> Đoạn văn </option>
+                            <option value={"2"}> Tích chọn </option>
+                            <option value={"3"}> Hộp kiểm  </option>
+                        </select>
+                    </div>
 
-                />
+                    {renderViewType()}
+                </div>
+            ))}
+            <div>
+                <input class="txt-button" type="submit" value={"Lưu"} onClick={saveFeedBack} />
+                <input class="txt-button" type="submit" value={"Thêm câu hỏi"} onClick={handleClick} />
             </div>
 
         </div>

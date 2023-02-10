@@ -6,6 +6,7 @@ import Main from "./Pages/Main";
 import Questions from "./Components/Questions";
 import AdminPages from "./Pages/Admin";
 import Dashboard from "./Pages/Dashboard";
+import Feedback from "./Components/Feedback";
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -101,6 +102,10 @@ function App() {
         {
           path: "/admin/question",
           element: <Questions />,
+        },
+        {
+          path: "/admin/feedback",
+          element: <Feedback />,
         },
       ],
     },
