@@ -1,6 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../Components/Questions.css"
+import { FrownOutlined, MehOutlined, SmileOutlined, } from '@ant-design/icons';
+import { Rate } from 'antd';
+
 
 const FormRadio = () => {
     const [listRadio, setListRadio] = useState([])
@@ -84,29 +87,77 @@ const FormCheckbox = () => {
     </div>
 }
 
-//add question
-// const FormQuesion = () => {
-
-// }
+const SatisfactionLevel = () => {
+    const customIcons = {
+        1: <FrownOutlined />,
+        2: <FrownOutlined />,
+        3: <MehOutlined />,
+        4: <SmileOutlined />,
+        5: <SmileOutlined />,
+    };
+    return (
+        <div>
+            <Rate allowHalf defaultValue={2.5} />
+            {/* <br />
+            <Rate defaultValue={3} character={({ index }) => customIcons[index + 1]} /> */}
+        </div>
+    )
+}
 
 const Questions = () => {
     const [selectType, setSelectType] = useState("1");
     const [addQuestionView, setAddQuestionView] = useState([]);
 
-    const onChangeSelect = (e) => {
-        setSelectType(e.target.value)
+    const onChangeSelect = (e, id) => {
+        setSelectType({
+            type: e.target.value,
+            questionID: id
+        })
     }
 
-    const renderViewType = () => {
-        switch (selectType) {
-            case "1":
-                return (
-                    <textarea type="text" class="form-control" name="" id="" rows="4" placeholder="Câu Trả lời" ></textarea>
-                )
-            case "2":
-                return <FormRadio />
-            case "3":
-                return <FormCheckbox />
+    useEffect(() => {
+        if (selectType) {
+            var arrTem = []
+            console.log(addQuestionView)
+            addQuestionView.forEach((value) => {
+                console.log(value, selectType.questionID)
+                if (value.id === selectType.questionID) {
+                    arrTem.push({
+                        ...value,
+                        type: selectType.type
+                    })
+                } else {
+                    arrTem.push(value)
+                }
+            })
+            console.log(arrTem)
+            setAddQuestionView(arrTem)
+        }
+    }, [selectType])
+
+
+    const renderViewType = (id, type) => {
+        if (type === "1") {
+            return (
+                <textarea type="text" class="form-control" name="" id="" rows="4" placeholder="Câu Trả lời" ></textarea>
+            )
+        }
+
+        if (type === "2") {
+            return (
+                <FormRadio />
+            )
+        }
+
+        if (type === "3") {
+            return (
+                <FormCheckbox />
+            )
+        }
+        if (type === "4") {
+            return (
+                <SatisfactionLevel />
+            )
         }
     }
 
@@ -114,42 +165,48 @@ const Questions = () => {
         window.location.href = "/admin/feedback";
     }
 
+    const deleteView = (id) => (e) => {
+        let list = Object.assign([], addQuestionView)
+        let selectedItem = list.filter((a) => {
+            return a.id + '' === id + ''
+        })[0]
+        console.log(selectedItem)
+
+        let index = list.indexOf(selectedItem)
+        list.splice(index, 1)
+        setAddQuestionView([...list])
+    }
+
     const handleClick = () => {
-        addQuestionView.push(
-            <div>
-                <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
-                            <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} />
-                            <select class="form-control" onChange={onChangeSelect} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
-                                <option value={"1"}> Đoạn văn </option>
-                                <option value={"2"}> Tích chọn </option>
-                                <option value={"3"}> Hộp kiểm  </option>
-                            </select>
-                        </div>
-                {renderViewType()}
-            </div>
-        )
-        setAddQuestionView([
-            ...addQuestionView
-        ])
-    };  
+        var id = new Date().getTime()
+        var arrTemp = []
+        addQuestionView.forEach((value) => arrTemp.push(value))
+        arrTemp.push({
+            id: id,
+            type: '1'
+        })
+        console.log(arrTemp)
+        setAddQuestionView(arrTemp)
+    };
 
     return (
         <div class="col-12 font-weight-bold mb-2 container" > Tạo Ý Kiến Đánh Giá
-            <div key={0} class="frame" >
-                <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
-                    <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} />
-                    <select class="form-control" onChange={onChangeSelect} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
-                        <option value={"1"}> Đoạn văn </option>
-                        <option value={"2"}> Tích chọn </option>
-                        <option value={"3"}> Hộp kiểm  </option>
-                    </select>
-                </div>
-
-                {renderViewType()}
-            </div>
             {addQuestionView.map((line, index) => (
                 <div key={index} class="frame" >
-                    {line}
+                    <div>
+                        {/* <h1>{id}</h1> */}
+                        <div class="context" style={{ display: 'flex', marginRight: '8px' }} >
+                            <input type="text" class="form-control" aria-describedby="" placeholder="Câu hỏi" style={{ display: 'flex', flex: 1, marginRight: 10 }} value={line.id} />
+                            <select class="form-control" onChange={(e) => onChangeSelect(e, line.id)} style={{ display: 'flex', flex: 1, marginTop: '8px' }}>
+                                <option value={"1"}> Đoạn văn </option>
+                                <option value={"2"}> Tích chọn </option>
+                                <option value={"3"}> Hộp kiểm  </option>
+                                <option value={"4"} > Mức độ hài lòng </option>
+                            </select>
+                            <input type="submit" value={"Xóa"} onClick={deleteView(line.id)} />
+                        </div>
+                    </div>
+                    {renderViewType(line.id, line.type)}
                 </div>
             ))}
             <div>
